@@ -1,0 +1,61 @@
+import random
+
+def set_difficulty():
+    print("Choose a difficulty level:")
+    print("1. Easy (15 attempts)")
+    print("2. Medium (10 attempts)")
+    print("3. Hard (5 attempts)")
+
+    while True:
+        choice = input("Enter your choice (1, 2, or 3): ")
+        if choice == '1':
+            return 15
+        elif choice == '2':
+            return 10
+        elif choice == '3':
+            return 5
+        else:
+            print("Invalid choice. Please select 1, 2, or 3.")
+
+def play_game():
+    print("Welcome to the Enhanced Number Guessing Game!")
+
+    while True:
+        number_to_guess = random.randint(1, 100)
+        attempts = 0
+        max_attempts = set_difficulty()
+        score = max_attempts * 10
+
+        print(f"I'm thinking of a number between 1 and 100.")
+        print(f"You have {max_attempts} attempts to guess it correctly.")
+
+        while attempts < max_attempts:
+            try:
+                guess = int(input("Enter your guess: "))
+            except ValueError:
+                print("Please enter a valid number.")
+                continue
+
+            attempts += 1
+            score -= 10  # Reduce score by 10 for each incorrect guess
+
+            if guess < number_to_guess:
+                print("Too low! Try again.")
+            elif guess > number_to_guess:
+                print("Too high! Try again.")
+            else:
+                print(f"Congratulations! You guessed the number {number_to_guess} in {attempts} attempts.")
+                print(f"Your score: {score}")
+                break
+
+        if attempts == max_attempts and guess != number_to_guess:
+            print(f"Sorry, you've used all {max_attempts} attempts. The number was {number_to_guess}.")
+            print(f"Your score: 0")
+
+        play_again = input("Do you want to play again? (yes/no): ").lower()
+        if play_again != 'yes':
+            print("Thanks for playing! Goodbye.")
+            break
+
+# Run the game
+play_game()
